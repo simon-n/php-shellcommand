@@ -325,6 +325,8 @@ class Command
             $process = proc_open($command, $descriptors, $pipes, $this->procCwd, $this->procEnv, $this->procOptions);
 
             if (is_resource($process)) {
+                stream_set_blocking($pipes[1], 0);
+                stream_set_blocking($pipes[2], 0);
 
                 $this->_stdOut = stream_get_contents($pipes[1]);
                 $this->_stdErr = stream_get_contents($pipes[2]);
